@@ -1,3 +1,3 @@
 class Constants {
-  static const String API_URL = "http://127.0.0.1:8080";
+  static const String apiUrl = "http://192.168.1.108:8080/api";
 }

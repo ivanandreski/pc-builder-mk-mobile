@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-// todo: change to real package name
-import 'package:helloworld/utils/colors/colors.dart';
-import 'package:helloworld/title_divider_widget.dart';
+import 'package:pc_builder_mk_mobile/utils/colors.dart';
+import 'package:pc_builder_mk_mobile/frontend/widgets/title_divider_widget.dart';
 
 class SummaryWidget extends StatelessWidget {
   final double price;
