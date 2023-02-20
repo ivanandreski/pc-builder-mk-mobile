@@ -28,7 +28,75 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Widget _createBody(BuildContext context) {
     return (
-        const Text(ProductDetailsScreen.title)
+        SingleChildScrollView(
+            child: Column(children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 15,
+                ),
+                child: Container(
+                    alignment: Alignment.center,
+                    child: Image.network(
+                      'https://d1a68gwbwfmqto.cloudfront.net/img/products/full/g6900box_1.jpg',
+                      width: 280.0,
+                    )),
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(
+                    top: 15,
+                  ),
+                  child: Text("Intel Celeron 500GHz",
+                      style: TextStyle(
+                        fontSize: 24,
+                      ))),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 35,
+                            alignment: Alignment.center,
+                            child: Text('Price: 3150 MKD',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 35,
+                            alignment: Alignment.center,
+                            child: Text('Available: true',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                ),
+                child: Divider(color: Colors.black, thickness: 1),
+              ),
+              // ProductStoreLocationWidget(), // for each location print these
+            ]))
     );
   }
 

@@ -16,7 +16,18 @@ Future main() async {
   await Hive.initFlutter();
   await Hive.openBox('localstorage');
 
-  runApp(const MyApp());
+  // runApp(const MyApp());
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ProductsViewModel(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

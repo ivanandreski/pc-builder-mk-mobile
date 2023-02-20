@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pc_builder_mk_mobile/utils/colors.dart';
 import 'package:pc_builder_mk_mobile/frontend/widgets/title_divider_widget.dart';
 
 class SummaryWidget extends StatelessWidget {
@@ -11,47 +10,44 @@ class SummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          child: Column(children: [
-        Row(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: TitleDividerWidget(title: "Summary"),
-              height: 50,
-            )
-          ],
-        ),
-        Padding(
-            padding: const EdgeInsets.only(
-              left: 35,
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text('Price: $price MKD',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ))
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Compatible: ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Icon(
-                      compatible ? Icons.check : Icons.close,
-                      color: Colors.lightGreen,
-                    )
-                  ],
-                ),
-              ],
-            ))
-      ])),
-    );
+    return Column(children: [
+      Row(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 50,
+            child: const TitleDividerWidget(title: "Summary"),
+          )
+        ],
+      ),
+      Padding(
+          padding: const EdgeInsets.only(
+            left: 35,
+          ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text('Price: $price MKD',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ))
+                ],
+              ),
+              Row(
+                children: [
+                  const Text('Compatible: ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Icon(
+                    compatible ? Icons.check : Icons.close,
+                    color: compatible ? Colors.lightGreen : Colors.red,
+                  )
+                ],
+              ),
+            ],
+          ))
+    ]);
   }
 }
