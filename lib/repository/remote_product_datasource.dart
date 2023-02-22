@@ -25,7 +25,7 @@ class RemoteProductDatasource extends ProductDatasourceInterface {
       ProductFactory productFactory = ProductFactory.instance;
       final Map<String, dynamic> data = json.decode(response.body);
       for (final productJson in data['content']['content']) {
-        products.add(productFactory.createProductFromJson(productJson));
+        products.add(productFactory.createProductFromJson(productJson)!);
       }
     }
 

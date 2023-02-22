@@ -29,3 +29,15 @@ class CategoryMap {
     CategorySlugs.ramSlug: CategoryTitles.ramTitle,
   };
 }
+
+class ReverseCategoryMap {
+  static const categoryMap = <String, String>{
+  CategoryTitles.caseTitle: CategorySlugs.caseSlug,
+    CategoryTitles.cpuTitle: CategorySlugs.cpuSlug,
+    CategoryTitles.mbTitle: CategorySlugs.mbSlug,
+    CategoryTitles.gpuTitle: CategorySlugs.gpuSlug,
+    CategoryTitles.psuTitle: CategorySlugs.psuSlug,
+    CategoryTitles.ramTitle: CategorySlugs.ramSlug,
+    CategoryTitles.storageTitle: CategorySlugs.storageSlug,
+  };
+}

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pc_builder_mk_mobile/domain/models/product.dart';
 
 import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart';
+import 'package:pc_builder_mk_mobile/frontend/widgets/product_store_location.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   static const routeName = '/product-details';
-  static const title = 'Product Details'; // TODO: replace this with the name of the product
 
   const ProductDetailsScreen({super.key});
 
@@ -13,9 +14,12 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  late final Product product;
 
   @override
   Widget build(BuildContext context) {
+    product = ModalRoute.of(context)!.settings.arguments as Product;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
@@ -27,83 +31,96 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget _createBody(BuildContext context) {
-    return (
-        SingleChildScrollView(
-            child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 15,
-                ),
-                child: Container(
+    return (SingleChildScrollView(
+        child: Column(children: [
+      Padding(
+        padding: const EdgeInsets.only(
+          top: 15,
+        ),
+        child: Container(
+            alignment: Alignment.center,
+            child: Image.network(
+              product.imageUrl,
+              width: 280.0,
+            )),
+      ),
+      Padding(
+          padding: const EdgeInsets.only(
+            top: 15,
+          ),
+          child: Text(product.name,
+              style: const TextStyle(
+                fontSize: 24,
+              ))),
+      Padding(
+        padding: const EdgeInsets.only(
+          top: 10,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 5,
+              child: Column(
+                children: [
+                  Container(
+                    height: 35,
                     alignment: Alignment.center,
-                    child: Image.network(
-                      'https://d1a68gwbwfmqto.cloudfront.net/img/products/full/g6900box_1.jpg',
-                      width: 280.0,
-                    )),
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(
-                    top: 15,
+                    child: Text('Price: ${product.price} MKD',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        )),
                   ),
-                  child: Text("Intel Celeron 500GHz",
-                      style: TextStyle(
-                        fontSize: 24,
-                      ))),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 10,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 35,
-                            alignment: Alignment.center,
-                            child: Text('Price: 3150 MKD',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                )),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 35,
-                            alignment: Alignment.center,
-                            child: Text('Available: true',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                )),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 15,
-                ),
-                child: Divider(color: Colors.black, thickness: 1),
+            ),
+            Expanded(
+              flex: 5,
+              child: Column(
+                children: [
+                  Container(
+                    height: 35,
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: [
+                        const Text('Available: ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Icon(
+                          product.isAvailable ? Icons.check : Icons.close,
+                          color: product.isAvailable
+                              ? Colors.lightGreen
+                              : Colors.red,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              // ProductStoreLocationWidget(), // for each location print these
-            ]))
-    );
+            ),
+          ],
+        ),
+      ),
+      const Padding(
+        padding: EdgeInsets.only(
+          left: 15,
+          right: 15,
+        ),
+        child: Divider(color: Colors.black, thickness: 1),
+      ),
+      Column(
+        children: [
+          ...product.storeLocations.map((s) {
+            return ProductStoreLocationWidget(slug: s.slug, name: s.name);
+          }).toList()
+        ],
+      ) // for each location print these
+    ])));
   }
 
   Widget _createAppBar(BuildContext context) {
     return AppBar(
-      // The title text which will be shown on the action bar
-      title: const Text(ProductDetailsScreen.title),
+      title: Text(product.name),
     );
   }
 }

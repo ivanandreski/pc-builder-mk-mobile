@@ -9,7 +9,9 @@ class ProductFactory {
 
   static ProductFactory get instance => _instance;
 
-  Product createProductFromJson(Map<String, dynamic> productMap) {
+  Product? createProductFromJson(Map<String, dynamic>? productMap) {
+    if(productMap == null) return null;
+
     List<StoreLocation> productStoreLocations = [];
     productMap['storeLocationSlugs'].forEach((key, value) => {
       productStoreLocations.add(StoreLocation(slug: key, name: value))

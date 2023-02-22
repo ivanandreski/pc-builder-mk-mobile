@@ -4,8 +4,9 @@ import 'package:pc_builder_mk_mobile/utils/constants.dart';
 
 class SelectProductWidget extends StatelessWidget {
   final Product product;
+  final Function onPressed;
 
-  const SelectProductWidget({super.key, required this.product});
+  const SelectProductWidget({super.key, required this.product, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,9 @@ class SelectProductWidget extends StatelessWidget {
         primary: Colors.white,
         minimumSize: const Size(88, 36),
       ),
-      onPressed: () {},
+      onPressed: () {
+        onPressed(product);
+      },
       child: Column(
         children: [
           Container(

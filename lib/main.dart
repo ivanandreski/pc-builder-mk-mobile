@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pc_builder_mk_mobile/domain/view_models/pc_build_view_model.dart';
 import 'package:pc_builder_mk_mobile/domain/view_models/products_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -14,15 +15,18 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
-  await Hive.openBox('localstorage');
+  var box = await Hive.openBox('localstorage');
 
-  // runApp(const MyApp());
+  // box.clear();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => ProductsViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PcBuildViewModel(),
         ),
       ],
       child: const MyApp(),

@@ -3,7 +3,10 @@ import 'package:pc_builder_mk_mobile/utils/colors.dart';
 import 'package:pc_builder_mk_mobile/frontend/widgets/title_divider_widget.dart';
 
 class ProductStoreLocationWidget extends StatelessWidget {
-  const ProductStoreLocationWidget({Key? key}) : super(key: key);
+  final String slug;
+  final String name;
+
+  ProductStoreLocationWidget({required this.slug, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -15,37 +18,21 @@ class ProductStoreLocationWidget extends StatelessWidget {
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.white,
-            minimumSize: Size(88, 36),
+            backgroundColor: Colors.white,
+            minimumSize: const Size(88, 36),
           ),
           onPressed: () {},
           child: Row(
             children: [
               Expanded(
-                flex: 8,
+                flex: 10,
                 child: Column(
                   children: [
                     Container(
                       height: 35,
                       alignment: Alignment.centerLeft,
-                      child: Text('Anhoch GTC',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          )),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    Container(
-                      height: 35,
-                      alignment: Alignment.centerLeft,
-                      child: Text('Anhoch',
-                          style: TextStyle(
+                      child: Text(name,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           )),

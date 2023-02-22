@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pc_builder_mk_mobile/domain/view_models/pc_build_view_model.dart';
+import 'package:pc_builder_mk_mobile/frontend/views/pc_builder_view.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 
@@ -7,10 +9,11 @@ import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.d
 import 'package:pc_builder_mk_mobile/utils/category_constants.dart';
 import 'package:pc_builder_mk_mobile/frontend/widgets/select_product_wiget.dart';
 
+import '../../repository/local_pc_build_repository.dart';
+
 class SelectProductScreen extends StatefulWidget {
   static const routeName = '/select-product';
-  static const title =
-      'Select Product'; // TODO: replace this with the name of the product
+  static const title = 'Select Product';
 
   const SelectProductScreen({super.key});
 
@@ -20,6 +23,7 @@ class SelectProductScreen extends StatefulWidget {
 
 class SelectProductScreenState extends State<SelectProductScreen> {
   late ProductsViewModel productsViewModel;
+  late PcBuildViewModel pcBuildViewModel;
 
   final controller = ScrollController();
 
@@ -29,14 +33,21 @@ class SelectProductScreenState extends State<SelectProductScreen> {
   @override
   void initState() {
     productsViewModel = Provider.of<ProductsViewModel>(context, listen: false);
+    pcBuildViewModel = Provider.of<PcBuildViewModel>(context, listen: false);
 
     super.initState();
 
     initViewModel() async {
       productsViewModel.resetViewModel("cpu");
       await productsViewModel.fetchNextPage();
+
+      if (pcBuildViewModel.pcBuild == null) {
+        final pcBuildRepository = PcBuildRepository.instance;
+        pcBuildViewModel.pcBuild = await pcBuildRepository.getPcBuild();
+      }
       setState(() {
         productsViewModel;
+        pcBuildViewModel;
       });
     }
 
@@ -54,6 +65,14 @@ class SelectProductScreenState extends State<SelectProductScreen> {
     controller.dispose();
 
     super.dispose();
+  }
+
+  _handleProductClick(product) async {
+    await pcBuildViewModel.putProduct(product, productsViewModel.categorySlug);
+    setState(() {
+      pcBuildViewModel;
+    });
+    Navigator.pushNamed(context, PcBuilderScreen.routeName);
   }
 
   _handleSearchChange(value) {
@@ -98,13 +117,13 @@ class SelectProductScreenState extends State<SelectProductScreen> {
         .where((product) =>
             search.isEmpty ||
             product.name.toLowerCase().contains(search.toLowerCase()))
-        .map((product) => SelectProductWidget(product: product))
+        .map((product) => SelectProductWidget(product: product, onPressed: _handleProductClick))
         .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    CategoryMap.categoryMap.keys;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
@@ -141,11 +160,6 @@ class SelectProductScreenState extends State<SelectProductScreen> {
               decoration: const InputDecoration(
                 hintText: 'Search',
               ),
-              // onChanged: (text) {
-              //   setState(() {
-              //     search = text;
-              //   });
-              // },
               onChanged: _onChangeHandler,
             ),
           ),
@@ -163,7 +177,6 @@ class SelectProductScreenState extends State<SelectProductScreen> {
 
   Widget _createAppBar(BuildContext context) {
     return AppBar(
-      // The title text which will be shown on the action bar
       title: const Text(SelectProductScreen.title),
     );
   }

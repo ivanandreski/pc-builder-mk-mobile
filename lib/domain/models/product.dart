@@ -22,4 +22,22 @@ class Product {
     required this.isAvailable,
     required this.storeLocations
   });
+
+  Map<String, dynamic> toJson() =>
+      {
+        'name': name,
+        'slug': slug,
+        'price': price,
+        'imageUrl': imageUrl,
+        'categorySlug': categorySlug,
+        'storeName': storeName,
+        'storeImageUrl': storeImageUrl,
+        'isAvailable': isAvailable,
+        // 'storeLocations': storeLocations.isNotEmpty ? [
+        //   ...storeLocations.map((s) => s.toJson()).toList()
+        // ] : [],
+        'storeLocationSlugs': storeLocations.isNotEmpty
+            ? Map.fromEntries(storeLocations.map((sl) => MapEntry(sl.slug, sl.name)))
+            : <String, dynamic>{},
+      };
 }

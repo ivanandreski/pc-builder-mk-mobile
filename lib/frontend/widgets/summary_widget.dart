@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pc_builder_mk_mobile/frontend/widgets/title_divider_widget.dart';
 
 class SummaryWidget extends StatelessWidget {
-  final double price;
-  final bool compatible;
+  late final double price;
+  late final bool compatible;
 
-  const SummaryWidget({Key? key, required this.price, required this.compatible})
-      : super(key: key);
+  SummaryWidget({required this.price, required this.compatible});
 
   @override
   Widget build(BuildContext context) {
