@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pc_builder_mk_mobile/utils/colors.dart';
-import 'package:pc_builder_mk_mobile/frontend/widgets/title_divider_widget.dart';
+import 'package:pc_builder_mk_mobile/domain/models/store_location.dart';
+import 'package:pc_builder_mk_mobile/service/map_service.dart';
 
 class ProductStoreLocationWidget extends StatelessWidget {
-  final String slug;
-  final String name;
+  final StoreLocation storeLocation;
 
-  ProductStoreLocationWidget({required this.slug, required this.name});
+  ProductStoreLocationWidget({super.key, required this.storeLocation});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,10 @@ class ProductStoreLocationWidget extends StatelessWidget {
             backgroundColor: Colors.white,
             minimumSize: const Size(88, 36),
           ),
-          onPressed: () {},
+          onPressed: () async {
+            final mapService = MapService.instance;
+            await mapService.openMap(storeLocation.longitude, storeLocation.latitude);
+          },
           child: Row(
             children: [
               Expanded(
@@ -31,7 +33,7 @@ class ProductStoreLocationWidget extends StatelessWidget {
                     Container(
                       height: 35,
                       alignment: Alignment.centerLeft,
-                      child: Text(name,
+                      child: Text(storeLocation.name,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,

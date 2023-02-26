@@ -113,7 +113,7 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
       Column(
         children: [
           ...product.storeLocations.map((s) {
-            return ProductStoreLocationWidget(slug: s.slug, name: s.name);
+            return ProductStoreLocationWidget(storeLocation: s);
           }).toList()
         ],
       )
