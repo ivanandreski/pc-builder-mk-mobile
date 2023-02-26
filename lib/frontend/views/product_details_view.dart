@@ -47,6 +47,8 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
       Padding(
           padding: const EdgeInsets.only(
             top: 15,
+            left: 15,
+            right: 15,
           ),
           child: Text(product.name,
               style: const TextStyle(
@@ -114,7 +116,7 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
             return ProductStoreLocationWidget(slug: s.slug, name: s.name);
           }).toList()
         ],
-      ) // for each location print these
+      )
     ])));
   }
 

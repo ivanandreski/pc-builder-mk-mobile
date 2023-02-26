@@ -22,14 +22,16 @@ class _LoginScreenState extends State<LoginScreen> {
   String password = "";
   String errorMessage = "";
 
-  void _submit() {
+  void _submit() async  {
     final authService = AuthService.instance;
-    final loginResponse = authService.login(email, password);
+    final loginResponse = await authService.login(email, password);
     if (loginResponse.success) {
       Navigator.pushReplacementNamed(context, PcBuilderScreen.routeName);
+    } else {
+      setState(() {
+        errorMessage = loginResponse.message;
+      });
     }
-
-    setState(() => {errorMessage = "Invalid credentials"});
   }
 
   @override
@@ -52,16 +54,14 @@ class _LoginScreenState extends State<LoginScreen> {
           key: loginFormKey,
           child: Column(
             children: [
-              if (errorMessage.isNotEmpty)
-                const SizedBox(
-                  height: 16,
-                ),
-              Text(
-                errorMessage,
-                style: const TextStyle(
-                    color: Colors.red, fontWeight: FontWeight.bold),
-              ),
               const SizedBox(
+                height: 8,
+              ),
+              if(errorMessage.isNotEmpty) Text(
+                errorMessage,
+                style: const TextStyle(color: Colors.red),
+              ),
+              if(errorMessage.isNotEmpty) const SizedBox(
                 height: 16,
               ),
               TextFormField(

@@ -75,10 +75,10 @@ class NavigationDrawer extends StatelessWidget {
               : ListTile(
                   leading: const Icon(Icons.home_outlined),
                   title: const Text('Logout'),
-                  onTap: () {
-                    AuthService.instance.logout();
+                  onTap: () async {
+                    await AuthService.instance.logout();
                     Navigator.pushReplacementNamed(
-                        context, SelectProductScreen.routeName);
+                        context, PcBuilderScreen.routeName);
                   })
         ],
       ));

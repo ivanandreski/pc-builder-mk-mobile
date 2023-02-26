@@ -33,11 +33,8 @@ class Product {
         'storeName': storeName,
         'storeImageUrl': storeImageUrl,
         'isAvailable': isAvailable,
-        // 'storeLocations': storeLocations.isNotEmpty ? [
-        //   ...storeLocations.map((s) => s.toJson()).toList()
-        // ] : [],
-        'storeLocationSlugs': storeLocations.isNotEmpty
-            ? Map.fromEntries(storeLocations.map((sl) => MapEntry(sl.slug, sl.name)))
-            : <String, dynamic>{},
+        'storeLocations': storeLocations.isNotEmpty
+            ? [...storeLocations.map((sl) => sl.toJson()).toList()]
+            : [],
       };
 }
