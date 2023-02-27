@@ -46,6 +46,25 @@ class AuthService {
           success: false, message: "Something went wrong!");
     }
   }
+  
+  Future<LoginResponse> qrLogin(String hash) async {
+    final data = {'hash': hash};
+    final url = Uri.parse('${Constants.apiUrl}/auth/qr-login');
+    final box = Hive.box('localstorage');
+    final token = await box.get('token');
+    final response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json"
+          'Authorization': 'Bearer $token',  
+        },
+        body: json.encode(data));
+    if (response.statusCode == 200) {
+      return const LoginResponse(success: true, message: "Sucess!");
+    } else {
+      return const LoginResponse(
+          success: false, message: "Something went wrong!");
+    }
+  }
 
   Future<void> logout() async {
     final box = Hive.box('localstorage');
