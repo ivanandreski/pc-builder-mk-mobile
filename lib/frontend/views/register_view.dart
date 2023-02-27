@@ -8,8 +8,7 @@ import 'package:pc_builder_mk_mobile/service/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routeName = '/register';
-  static const title =
-      'Register'; // TODO: replace this with the name of the product
+  static const title = 'Register';
 
   const RegisterScreen({super.key});
 
@@ -63,13 +62,15 @@ class RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(
                   height: 8,
                 ),
-                if(errorMessage.isNotEmpty) Text(
-                  errorMessage,
-                  style: const TextStyle(color: Colors.red),
-                ),
-                if(errorMessage.isNotEmpty) const SizedBox(
-                  height: 16,
-                ),
+                if (errorMessage.isNotEmpty)
+                  Text(
+                    errorMessage,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                if (errorMessage.isNotEmpty)
+                  const SizedBox(
+                    height: 16,
+                  ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.mail),

@@ -54,7 +54,7 @@ class AuthService {
     final token = await box.get('token');
     final response = await http.post(url,
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
           'Authorization': 'Bearer $token',  
         },
         body: json.encode(data));

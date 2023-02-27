@@ -44,6 +44,7 @@ dependencies:
   url_launcher: ^6.1.7
   geolocator: ^7.0.0
   fluttertoast: ^8.0.8
+  qr_code_scanner: ^1.0.1
 
 dev_dependencies:
   flutter_test:

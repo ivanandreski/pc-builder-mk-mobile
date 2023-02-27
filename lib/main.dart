@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pc_builder_mk_mobile/domain/view_models/pc_build_view_model.dart';
 import 'package:pc_builder_mk_mobile/domain/view_models/products_view_model.dart';
+import 'package:pc_builder_mk_mobile/frontend/views/qr_code_login_view.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pc_builder_mk_mobile/frontend/views/login_view.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         routes: {
           LoginScreen.routeName: (ctx) => const LoginScreen(),
           RegisterScreen.routeName: (ctx) => const RegisterScreen(),
+          QrCodeLoginView.routeName: (ctx) => const QrCodeLoginView(),
           ProfileScreen.routeName: (ctx) => const ProfileScreen(),
           PcBuilderScreen.routeName: (ctx) => const PcBuilderScreen(),
           SelectProductScreen.routeName: (ctx) => const SelectProductScreen(),

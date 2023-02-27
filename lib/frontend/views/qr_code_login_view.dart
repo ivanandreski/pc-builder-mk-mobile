@@ -1,75 +1,93 @@
-// // dependencies:
-//   // mobile_scanner: ^3.0.0
-  
-// import 'package:flutter/material.dart';
-// import 'package:mobile_scanner/mobile_scanner.dart';
+import 'dart:io';
 
-// // https://github.com/juliansteenbakker/mobile_scanner
+import 'package:flutter/material.dart';
+import 'package:pc_builder_mk_mobile/frontend/views/pc_builder_view.dart';
+import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart';
+import 'package:pc_builder_mk_mobile/service/auth_service.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-// class QrScanner extends StatelessWidget {
-//   MobileScannerController cameraController = MobileScannerController();
+class QrCodeLoginView extends StatefulWidget {
+  static const routeName = '/qr-login';
+  static const title = 'QR Login';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Mobile Scanner'),
-//           actions: [
-//             IconButton(
-//               color: Colors.white,
-//               icon: ValueListenableBuilder(
-//                 valueListenable: cameraController.torchState,
-//                 builder: (context, state, child) {
-//                   switch (state as TorchState) {
-//                     case TorchState.off:
-//                       return const Icon(Icons.flash_off, color: Colors.grey);
-//                     case TorchState.on:
-//                       return const Icon(Icons.flash_on, color: Colors.yellow);
-//                   }
-//                 },
-//               ),
-//               iconSize: 32.0,
-//               onPressed: () => cameraController.toggleTorch(),
-//             ),
-//             IconButton(
-//               color: Colors.white,
-//               icon: ValueListenableBuilder(
-//                 valueListenable: cameraController.cameraFacingState,
-//                 builder: (context, state, child) {
-//                   switch (state as CameraFacing) {
-//                     case CameraFacing.front:
-//                       return const Icon(Icons.camera_front);
-//                     case CameraFacing.back:
-//                       return const Icon(Icons.camera_rear);
-//                   }
-//                 },
-//               ),
-//               iconSize: 32.0,
-//               onPressed: () => cameraController.switchCamera(),
-//             ),
-//           ],
-//         ),
-//         body: MobileScanner(
-//           // fit: BoxFit.contain,
-//           controller: cameraController,
-//           onDetect: (capture) {
-//             final List<Barcode> barcodes = capture.barcodes;
-//             final Uint8List? image = capture.image;
-//             print(barcodes.length);
-//             if(barcodes.isNotEmpty) {
-//               print(barcodes[0]);
+  const QrCodeLoginView({super.key});
 
-//               // ako ova e tekstto od qr prati go vo auth service
-//               // vo auth service napravi funkcija koja ke pravi api povik so setiran bearer token od localStorage
-//               // i vo body ke go ispraka stringov od barcode
-//               // vo sidebar dodadi use edno kopce scan qr login koe ke se pokazuva ako vo localStorage ima token
-//             }
-//             for (final barcode in barcodes) {
-//               debugPrint('Barcode found! ${barcode.rawValue}');
-//             }
-//           },
-//         ),
-//     );
-//   }
-// }
-  
+  @override
+  State<StatefulWidget> createState() => QrCodeLoginViewState();
+}
+
+class QrCodeLoginViewState extends State<QrCodeLoginView> {
+  final qrKey = GlobalKey(debugLabel: 'QR');
+
+  QRViewController? controller;
+
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
+
+  String errorMessage = "";
+
+  void _submit(barcode) async {
+    setState(() {
+      errorMessage = "";
+    });
+    if (barcode != null) {
+      final hash = barcode?.code;
+      final authService = AuthService.instance;
+      final response = await authService.qrLogin(hash);
+      if (response.success) {
+        controller!.stopCamera();
+        Navigator.pushReplacementNamed(context, PcBuilderScreen.routeName);
+      } else {
+        setState(() {
+          errorMessage = response.message;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: _createAppBar(context),
+      ),
+      drawer: const NavigationDrawer(),
+      body: _createBody(context),
+    );
+  }
+
+  Widget _createBody(BuildContext context) {
+    return QRView(
+        key: qrKey,
+        onQRViewCreated: onQRViewCreated,
+      overlay: QrScannerOverlayShape(
+        cutOutSize: MediaQuery.of(context).size.width * 0.8,
+borderWidth: 10,
+        borderLength: 20,
+        borderRadius: 10,
+        borderColor: Colors.blueGrey
+      ),
+    );
+  }
+
+  void onQRViewCreated(QRViewController controller) {
+    setState(() {
+      this.controller = controller;
+    });
+
+    controller.scannedDataStream
+    .listen((barcode) => _submit(barcode));
+  }
+
+  Widget _createAppBar(BuildContext context) {
+    return AppBar(
+      // The title text which will be shown on the action bar
+      title: const Text("QR Code Scan"),
+    );
+  }
+}

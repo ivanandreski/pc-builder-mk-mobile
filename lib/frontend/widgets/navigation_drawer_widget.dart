@@ -7,6 +7,8 @@ import 'package:pc_builder_mk_mobile/frontend/views/register_view.dart';
 import 'package:pc_builder_mk_mobile/frontend/views/profile_view.dart';
 import 'package:pc_builder_mk_mobile/service/auth_service.dart';
 
+import '../views/qr_code_login_view.dart';
+
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
 
@@ -55,6 +57,15 @@ class NavigationDrawer extends StatelessWidget {
                 Navigator.pushReplacementNamed(
                     context, ProfileScreen.routeName);
               }),
+          if (AuthService.instance.userIsLoggedIn()) const Divider(color: Colors.black54),
+          if (AuthService.instance.userIsLoggedIn())
+            ListTile(
+                leading: const Icon(Icons.login),
+                title: const Text(QrCodeLoginView.title),
+                onTap: () {
+                  Navigator.pushReplacementNamed(
+                      context, QrCodeLoginView.routeName);
+                }),
           const Divider(color: Colors.black54),
           if (!AuthService.instance.userIsLoggedIn())
             ListTile(
