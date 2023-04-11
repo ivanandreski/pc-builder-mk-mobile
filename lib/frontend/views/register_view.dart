@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pc_builder_mk_mobile/frontend/views/pc_builder_view.dart';
 
-import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart';
+import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart' as custom_nav_drawer;
 import 'package:pc_builder_mk_mobile/service/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -46,7 +46,7 @@ class RegisterScreenState extends State<RegisterScreen> {
         preferredSize: const Size.fromHeight(50),
         child: _createAppBar(context),
       ),
-      drawer: const NavigationDrawer(),
+      drawer: const custom_nav_drawer.NavigationDrawer(),
       body: _createBody(context),
     );
   }

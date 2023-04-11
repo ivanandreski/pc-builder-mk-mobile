@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pc_builder_mk_mobile/domain/models/product.dart';
 
-import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart';
+import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart' as custom_nav_drawer;
 import 'package:pc_builder_mk_mobile/frontend/widgets/product_store_location.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
         preferredSize: const Size.fromHeight(50),
         child: _createAppBar(context),
       ),
-      drawer: const NavigationDrawer(),
+      drawer: const custom_nav_drawer.NavigationDrawer(),
       body: _createBody(context),
     );
   }

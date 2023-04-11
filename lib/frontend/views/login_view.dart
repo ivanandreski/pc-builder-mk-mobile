@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:pc_builder_mk_mobile/service/auth_service.dart';
 
 import 'package:pc_builder_mk_mobile/frontend/views/pc_builder_view.dart';
-import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart';
+import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart' as custom_nav_drawer;
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         preferredSize: const Size.fromHeight(50),
         child: _createAppBar(context),
       ),
-      drawer: const NavigationDrawer(),
+      drawer: const custom_nav_drawer.NavigationDrawer(),
       body: _createBody(context),
     );
   }

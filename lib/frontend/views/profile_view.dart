@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart';
+import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart' as custom_nav_drawer;
 
 class ProfileScreen extends StatefulWidget {
   static const routeName = '/profile';
@@ -21,7 +21,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         preferredSize: const Size.fromHeight(50),
         child: _createAppBar(context),
       ),
-      drawer: const NavigationDrawer(),
+      drawer: const custom_nav_drawer.NavigationDrawer(),
       body: _createBody(context),
     );
   }

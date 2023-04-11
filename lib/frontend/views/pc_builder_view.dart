@@ -5,7 +5,7 @@ import 'package:pc_builder_mk_mobile/domain/view_models/pc_build_view_model.dart
 import 'package:pc_builder_mk_mobile/domain/models/product.dart';
 
 import 'package:pc_builder_mk_mobile/frontend/widgets/product_in_build_widget.dart';
-import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart';
+import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart' as custom_nav_drawer;
 import 'package:pc_builder_mk_mobile/frontend/widgets/summary_widget.dart';
 import 'package:pc_builder_mk_mobile/utils/category_constants.dart';
 
@@ -57,7 +57,7 @@ class PcBuilderScreenState extends State<PcBuilderScreen> {
         preferredSize: const Size.fromHeight(50),
         child: _createAppBar(context),
       ),
-      drawer: const NavigationDrawer(),
+      drawer: const custom_nav_drawer.NavigationDrawer(),
       body: _createBody(context),
     );
   }

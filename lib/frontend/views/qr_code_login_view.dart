@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pc_builder_mk_mobile/frontend/views/pc_builder_view.dart';
-import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart';
+import 'package:pc_builder_mk_mobile/frontend/widgets/navigation_drawer_widget.dart' as custom_nav_drawer;
 import 'package:pc_builder_mk_mobile/service/auth_service.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -56,7 +56,7 @@ class QrCodeLoginViewState extends State<QrCodeLoginView> {
         preferredSize: const Size.fromHeight(50),
         child: _createAppBar(context),
       ),
-      drawer: const NavigationDrawer(),
+      drawer: const custom_nav_drawer.NavigationDrawer(),
       body: _createBody(context),
     );
   }
